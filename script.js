@@ -172,10 +172,43 @@ function showWaitingMessage() {
 }
 
 function showSuccessMessage() {
-    elements.statusMessage.textContent = '✅ Thanh toán thành công! Cảm ơn bạn đã đóng góp vào quỹ lớp.';
-    elements.statusMessage.className = 'status-message status-success';
-    elements.statusMessage.style.display = 'block';
+    Swal.fire({
+        icon: 'success',
+        title: 'Đã thanh toán thành công!',
+        text: `Cảm ơn ní, tui nhận được rồi.`,
+        confirmButtonText: 'OK'
+    }).then(() => {
+        resetPageToInitialState();
+    });
 }
+
+function resetPageToInitialState() {
+    clearCurrentInterval(); // Dừng kiểm tra thanh toán
+    isSuccess = false;
+
+    // Ẩn các status
+    elements.statusMessage.style.display = 'none';
+
+    // Ẩn QR
+    elements.qrSection.style.display = 'none';
+
+    // Reset lại lựa chọn
+    const selectedOption = document.querySelector('.option.selected');
+    if (selectedOption) {
+        selectedOption.classList.remove('selected');
+    }
+
+    // Reset nội dung trạng thái, màu nền
+    elements.qrSection.style.background = '';
+    elements.qrImage.src = '';
+    elements.nameInput.value = '';
+
+    // (Nếu có thêm input, form khác thì reset thêm ở đây)
+
+    console.log('✅ Trang đã reset về trạng thái ban đầu');
+}
+
+
 
 function hideStatus() {
     elements.statusMessage.style.display = 'none';
