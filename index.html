@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đóng Quỹ Lớp - Hệ Thống Thanh Toán</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">💰 Thanh Toán Quỹ Lớp</h1>
+            <p class="subtitle">Chọn loại thành viên và thực hiện thanh toán</p>
+        </div>
+
+        <div class="payment-options">
+            <div class="option" data-type="member" data-price="96000" data-description="MEMBER">
+                <div class="option-header">
+                    <div class="option-title">
+                        🎓 Đoàn viên
+                        <div class="radio-button"></div>
+                    </div>
+                    <div class="option-price">96,000₫</div>
+                </div>
+                <div class="option-description">
+                    Dành cho các bạn đã vào Đoàn. Bao gồm Quỹ phong trào 72.000 và Đoàn phí 24.000
+                </div>
+                <div class="option-footer">
+                    <div></div>
+                    <div class="member-check" onclick="openMemberModal(event)">
+                        🔍 Kiểm tra đoàn viên?
+                    </div>
+                </div>
+            </div>
+
+            <div class="option" data-type="non-member" data-price="72000" data-description="NONMEMBER">
+                <div class="option-header">
+                    <div class="option-title">
+                        👥 Không phải đoàn viên
+                        <div class="radio-button"></div>
+                    </div>
+                    <div class="option-price">72,000₫</div>
+                </div>
+                <div class="option-description">
+                    Dành cho các bạn chưa vào Đoàn. Bao gồm Quỹ phong trào 72.000
+                </div>
+            </div>
+        </div>
+
+        <div class="qr-section" id="qrSection">
+            <h3 class="qr-title">Quét mã QR để thanh toán</h3>
+            
+            <div class="qr-container">
+                <img class="qr-image" id="qrImage" alt="QR Code thanh toán" style="display: none;" />
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <div class="loading-text" id="loadingText">Đang tải mã QR...</div>
+            </div>
+
+            <div class="payment-info">
+                <div class="info-row">
+                    <span class="info-label">Ngân hàng:</span>
+                    <span class="info-value">MB Bank</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Số tài khoản:</span>
+                    <span class="info-value">0967394474</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Số tiền:</span>
+                    <span class="info-value" id="paymentAmount">-</span>
+                </div>
+            </div>
+
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+    </div>
+
+    <!-- Member Check Modal -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">🔍 Kiểm tra đoàn viên</h3>
+                <button class="close-button" onclick="closeMemberModal()">&times;</button>
+            </div>
+            
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="switchTab('search')">Tìm kiếm</button>
+                <button class="tab-button" onclick="switchTab('list')">Danh sách</button>
+            </div>
+
+            <div class="tab-content active" id="searchTab">
+                <div class="search-section">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Nhập MSSV hoặc họ tên để kiểm tra..."
+                        id="memberSearch"
+                        oninput="searchMember()"
+                    >
+                    <div class="search-result" id="searchResult" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="listTab">
+                <div class="member-list" id="memberList">
+                    <!-- Member list will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
